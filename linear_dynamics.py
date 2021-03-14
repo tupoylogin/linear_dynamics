@@ -64,10 +64,10 @@ class LinearDynamicalSystem():
         Simulates system response
         -------------------------
         """
-        outputs = [sum([ro**(i+1)*(fc*np.cos(omega*i)+fs*np.sin(omega*i)) 
+        outputs = [sum([ro**(i)*(fc*np.cos(omega*i)+fs*np.sin(omega*i)) 
                     for (ro, fc, fs, omega) in zip(self.ro, self.f_c, self.f_s, self.omega)])
-                    for i in range(T)]
-        return np.append([0.], convolve(signal, outputs))[:T]
+                    for i in range(T+1)]
+        return np.append([0.], convolve(outputs, signal))[:T]
 
 
     def transform_params(self) -> tp.List[np.ndarray]:
