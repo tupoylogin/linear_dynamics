@@ -30,12 +30,12 @@ class LinearDynamicalSystem():
         ---------------------------
         :param mode: mode of system
         """
-        omega_im = [np.random.default_rng().uniform(low=np.pi/8, high=np.pi/2)
+        omega_im = [np.random.default_rng().uniform(low=0., high=np.pi/8)
                         for _ in range(self.p_im)]
-        self.alpha_im = [np.random.default_rng().uniform(low=0., high=np.cos(omega))
+        self.alpha_im = [np.random.default_rng().uniform(low=0.9, high=np.cos(omega))
                         for omega in omega_im]
         min_omega = np.argmin(omega_im) if omega_im else None
-        ro_min = self.alpha_im[min_omega]/np.cos(omega_im[min_omega]) if min_omega else 0.
+        ro_min = self.alpha_im[min_omega]/np.cos(omega_im[min_omega]) if min_omega else 0.93
         ro_real = [np.round(np.random.default_rng().uniform(low=ro_min, high=1.),4)
                         for _ in range(self.p_real)]
         ro_im = [np.round(alpha/np.cos(omega),4) for alpha, omega in zip(self.alpha_im, omega_im)]
