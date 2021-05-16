@@ -83,9 +83,9 @@ class LinearDynamicalSystem():
         A = np.eye(len(eigv), k=-1)
         A[:, -1] = np.array(ai[::-1]).T
         C = np.append(np.zeros(self.n-1), [1.])
-        G_LHS = np.array([C@np.linalg.matrix_power(A, i+1) for i in range(len(A))])
-        G_RHS_REAL = [(np.array(self.ro[:self.p_real])**(i+1)).tolist() for i in range(self.n)]
-        G_RHS_IM = [sum([np.linalg.matrix_power([[a, b], [-b, a]], i+1)[0].tolist()
+        G_LHS = np.array([C@np.linalg.matrix_power(A, i) for i in range(len(A))])
+        G_RHS_REAL = [np.power(np.array(self.ro[:self.p_real]), i).tolist() for i in range(self.n)]
+        G_RHS_IM = [sum([np.linalg.matrix_power([[a, b], [-b, a]], i)[0].tolist()
                     for (a,b) in zip(self.alpha_im, self.beta_im)], []) 
                     for i in range(self.n)]
         T = np.linalg.solve(G_LHS, np.hstack((G_RHS_REAL, G_RHS_IM)))
